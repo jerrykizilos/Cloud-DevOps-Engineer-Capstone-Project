@@ -13,6 +13,7 @@ pipeline {
                     sh '''
                         docker build -t jerrybuild .
                     '''
+                }
             }
         // }
         // stage('Login to Dockerhub') {
