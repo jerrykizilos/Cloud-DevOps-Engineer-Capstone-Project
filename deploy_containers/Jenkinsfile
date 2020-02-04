@@ -15,21 +15,7 @@ pipeline {
                     '''
                 }
             }
-        // }
-        // stage('Login to Dockerhub') {
-        //     steps {
-        //         withCredentials() {
-
-        //         }
-        //     }
-        // }
-        // stage('Upload Image to Dockerhub') {
-        //     steps {
-        //     }
-        // }
-        // stage('Deploy Kubernetes') {
-        //     steps {
-        //     }
-        // }
+        }
+       
     }
 }
