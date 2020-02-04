@@ -30,7 +30,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-east-1', credentials:'AWSCredentials') {
 					sh '''
-						/usr/local/bin/aws eks update-kubeconfig --name capstonejerry
+						aws eks update-kubeconfig --name capstonejerry
 					'''
 				}
 			}
