@@ -9,26 +9,26 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                withCredentials([]) {
+                withCredentials([usernamePassword(credentialsId: 'DockerHub')]) {
                     sh '''
                         docker build -t jerrybuild .
                     '''
             }
-        }
-        stage('Login to Dockerhub') {
-            steps {
-                withCredentials() {
-                    
-                }
-            }
-        }
-        stage('Upload Image to Dockerhub') {
-            steps {
-            }
-        }
-        stage('Deploy Kubernetes') {
-            steps {
-            }
-        }
+        // }
+        // stage('Login to Dockerhub') {
+        //     steps {
+        //         withCredentials() {
+
+        //         }
+        //     }
+        // }
+        // stage('Upload Image to Dockerhub') {
+        //     steps {
+        //     }
+        // }
+        // stage('Deploy Kubernetes') {
+        //     steps {
+        //     }
+        // }
     }
 }
