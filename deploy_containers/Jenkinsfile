@@ -72,6 +72,16 @@ pipeline {
                 input "Are you confident enough to switch to green?"
             }
         }
+
+        stage('Create green service') {
+            steps {
+                withAWS(region:'us-east-1', credentials:'AWSCredentials') {
+                    sh '''
+                      kubectl apply -f ./deploy_containers/green-service.json
+                    '''
+                }
+            }
+        }
        
     }
 }
