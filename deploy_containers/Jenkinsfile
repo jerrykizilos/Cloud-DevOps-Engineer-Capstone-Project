@@ -4,12 +4,12 @@ pipeline {
 
         stage('Lint HTML') {
             steps {
-                sh 'tidy -q -e deploy_containers/index.html'
+                sh 'tidy -q -e *.html'
             }
         }
         stage('Build Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'DockerHub')]) {
+                withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'veracode_password', usernameVariable: 'veracode_username')]) {
                     sh '''
                         docker build -t jerrybuild .
                     '''
