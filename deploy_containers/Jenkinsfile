@@ -56,6 +56,16 @@ pipeline {
                 }
             }
         }
+
+        stage('Create blue service') {
+            steps {
+                withAWS(region:'us-east-1', credentials:'AWSCredentials') {
+                    sh '''
+                      kubectl apply -f ./deploy_containers/blue-service.json
+                    '''
+                }
+            }
+        }
        
     }
 }
