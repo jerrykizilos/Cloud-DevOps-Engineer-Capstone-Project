@@ -66,6 +66,12 @@ pipeline {
                 }
             }
         }
+
+        stage('Approve green deployment') {
+            steps {
+                input "Are you confident enough to switch to green?"
+            }
+        }
        
     }
 }
