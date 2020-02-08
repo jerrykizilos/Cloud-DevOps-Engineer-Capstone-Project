@@ -22,8 +22,8 @@ pipeline {
             steps {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DockerHub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
                     sh '''
-                      sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-                      sudo docker push jerrykiz/capstone
+                        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+                        sudo docker push jerrykiz/capstone
                     '''
                 }
             }
@@ -33,7 +33,7 @@ pipeline {
             steps {
                 withAWS(region:'us-east-1', credentials:'AWSCredentials') {
                     sh '''
-                      sudo kubectl config use-context arn:aws:eks:us-east-1:831702009337:cluster/capstonejerry
+                        sudo kubectl config use-context arn:aws:eks:us-east-1:831702009337:cluster/capstonejerry
                     '''
                 }
             }
@@ -43,7 +43,8 @@ pipeline {
             steps {
                 withAWS(region:'us-east-1', credentials:'AWSCredentials') {
                     sh '''
-                      sudo kubectl apply -f /home/cloud_user/Cloud-DevOps-Engineer-Capstone-Project/deploy_containers/blue_controller.json
+                        pwd
+                        sudo kubectl apply -f /home/cloud_user/Cloud-DevOps-Engineer-Capstone-Project/deploy_containers/blue_controller.json
                     '''
                 }
             }
@@ -53,7 +54,7 @@ pipeline {
             steps {
                 withAWS(region:'us-east-1', credentials:'AWSCredentials') {
                     sh '''
-                      sudo kubectl apply -f /home/cloud_user/Cloud-DevOps-Engineer-Capstone-Project/deploy_containers/green_controller.json
+                        sudo kubectl apply -f /home/cloud_user/Cloud-DevOps-Engineer-Capstone-Project/deploy_containers/green_controller.json
                     '''
                 }
             }
@@ -63,7 +64,7 @@ pipeline {
             steps {
                 withAWS(region:'us-east-1', credentials:'AWSCredentials') {
                     sh '''
-                      sudo kubectl apply -f /home/cloud_user/Cloud-DevOps-Engineer-Capstone-Project/deploy_containers/blue_service.json
+                        sudo kubectl apply -f /home/cloud_user/Cloud-DevOps-Engineer-Capstone-Project/deploy_containers/blue_service.json
                     '''
                 }
             }
@@ -79,7 +80,7 @@ pipeline {
             steps {
                 withAWS(region:'us-east-1', credentials:'AWSCredentials') {
                     sh '''
-                      sudo kubectl apply -f /home/cloud_user/Cloud-DevOps-Engineer-Capstone-Project/deploy_containers/green_service.json
+                        sudo kubectl apply -f /home/cloud_user/Cloud-DevOps-Engineer-Capstone-Project/deploy_containers/green_service.json
                     '''
                 }
             }
