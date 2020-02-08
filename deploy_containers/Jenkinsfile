@@ -4,26 +4,47 @@ pipeline {
 
         stage('Lint HTML') {
             steps {
-                sh 'tidy -q -e deploy_containers/index.html'
+                sh 'tidy -q -e *index.html'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build Blue Docker Image') {
             steps {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DockerHub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
                     sh '''
-                        sudo docker build -t jerrykiz/capstone https://github.com/jerrykizilos/Cloud-DevOps-Engineer-Capstone-Project.git#master:deploy_containers
+                        sudo docker build -t jerrykiz/capstone:v1 https://github.com/jerrykizilos/Cloud-DevOps-Engineer-Capstone-Project.git#master:deploy_containers/blue
                     '''
                 }
             }
         }
 
-        stage('Push Image') {
+        stage('Push Blue Image') {
             steps {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DockerHub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
                     sh '''
                         sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-                        sudo docker push jerrykiz/capstone
+                        sudo docker push jerrykiz/capstone:v1
+                    '''
+                }
+            }
+        }
+
+        stage('Build Green Docker Image') {
+            steps {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DockerHub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
+                    sh '''
+                        sudo docker build -t jerrykiz/capstone:v2 https://github.com/jerrykizilos/Cloud-DevOps-Engineer-Capstone-Project.git#master:deploy_containers/green
+                    '''
+                }
+            }
+        }
+
+        stage('Push Green Image') {
+            steps {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DockerHub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
+                    sh '''
+                        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+                        sudo docker push jerrykiz/capstone:v2
                     '''
                 }
             }
