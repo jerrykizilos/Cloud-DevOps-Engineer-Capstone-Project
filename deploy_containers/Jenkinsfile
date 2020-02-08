@@ -4,7 +4,8 @@ pipeline {
 
         stage('Lint HTML') {
             steps {
-                sh 'tidy -q -e *index.html'
+                sh 'tidy -q -e deploy_containers/blue/index.html'
+                sh 'tidy -q -e deploy_containers/green/index.html'
             }
         }
 
